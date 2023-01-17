@@ -1,0 +1,196 @@
+:root {
+  --app-container: #add8e6;
+  --main-color: #1f1c2e;
+  --secondary-color: #4a4a4a;
+  --link-color: #1f1c2e;
+  --link-color-hover: #c3cff4;
+  --link-color-active: #fff;
+  --link-color-active-bg: #1f1c2e;
+  --universities-section: #fff;
+  --button-bg: #003366;
+  --search-area-bg: #fff;
+  --containerSize: 35rem;
+}
+
+body {
+  background-color: #fff;
+}
+.hide {
+  display: none !important;
+}
+.container {
+  display: flex;
+}
+#inputContainer {
+  width: max-content;
+  padding: 1rem;
+  background: #fff;
+  box-shadow: 0 30px 60px 0 rgb(90 116 148 / 40%);
+  border: 1px solid #333;
+  border-radius: 10px;
+}
+#results {
+  display: block;
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 90%;
+  overflow: auto;
+  width: auto;
+  margin-block: 1rem;
+}
+#finalResult {
+  background: #fff;
+  box-shadow: 0 30px 60px 0 rgb(90 116 148 / 40%);
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+th {
+  background-color: var(--button-bg);
+  color: white;
+  font-weight: normal;
+  padding: 20px 20px;
+  text-align: center;
+}
+td {
+  color: #333;
+  padding: 10px 10px;
+}
+h3 {
+  margin-bottom: 0.5rem;
+  width: 5rem;
+}
+#explaination {
+  width: var(--containerSize);
+  height: 21rem;
+  background: #fff;
+  box-shadow: 0 30px 60px 0 rgb(90 116 148 / 40%);
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem;
+
+  font-size: large;
+  font-weight: bold;
+  font-style: oblique;
+  font-family: monospace;
+}
+
+table {
+  width: var(--containerSize);
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 30px 60px 0 rgb(90 116 148 / 40%);
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+thead {
+  border: 1px solid #333;
+}
+tr td div {
+  display: "";
+  max-height: 0;
+  padding: 0 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: max-height 0.3s, padding 0.3s;
+}
+tr.active td div {
+  max-height: 100px;
+  padding: 10px 10px;
+  transition: max-height 0.6s, padding 0.6s;
+}
+.red {
+  color: red;
+}
+.animate {
+  position: relative;
+}
+.animate::before {
+  position: absolute;
+  color: red;
+  content: "\2193";
+  font-size: 1.7rem;
+  font-weight: 100;
+  top: 3rem;
+  left: -0.3rem;
+}
+.animate::after {
+  position: absolute;
+  color: red;
+  content: "\2198";
+  font-size: 1.5rem;
+  top: 3rem;
+  left: -0.2rem;
+}
+.arrw {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-top: 2px solid red;
+  border-left: 2px solid red;
+  transform: rotate(160deg);
+}
+.arrw::after {
+  content: "";
+  display: block;
+  width: 2px;
+  height: 45px;
+  background-color: red;
+  transform: rotate(314deg) translate(15px, 4px);
+}
+
+input[type="text"] {
+  width: 10rem;
+  height: 2rem;
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  background: #fff;
+  box-shadow: 0 10px 20px 0 rgb(90 116 148 / 40%);
+  border: 1px solid #333;
+  margin-inline: 0.5rem;
+}
+input[type="button"] {
+  width: 10rem;
+  height: 2rem;
+  border-radius: 0.4rem;
+  outline: none;
+  box-shadow: 0 10px 20px 0 rgb(90 116 148 / 40%);
+  color: white;
+  background: var(--button-bg);
+  border: 1px solid var(--link-color-active);
+  margin-inline: 0.5rem;
+  cursor: pointer;
+}
+input[type="button"]:disabled {
+  background: gray;
+}
+input[type="button"]:hover:disabled {
+  background: gray;
+  color: white;
+  border: 1px solid var(--link-color-active);
+}
+input[type="button"]:hover {
+  color: var(--link-color);
+  background: var(--universities-section);
+  border-color: var(--link-color);
+}
+#givenData {
+  display: flex;
+  width: var(--containerSize);
+  padding: 1rem;
+  justify-content: flex-start;
+  background: #fff;
+  box-shadow: 0 30px 60px 0 rgb(90 116 148 / 40%);
+  margin-block: 1rem;
+  border: 1px solid;
+  border-radius: 5px;
+  margin-inline: 1rem;
+}
+
+span.operation {
+  font-size: medium;
+  font-weight: bolder;
+}

@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Algo Visualizer</title>
+    <script
+      type="text/javascript"
+      src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+    ></script>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="inputContainer">
+      <input
+        type="text"
+        name="factor1"
+        value=""
+        placeholder="BR (Mulitiplicand)"
+      />
+      <span class="operation">X</span>
+      <input
+        type="text"
+        name="factor2"
+        value=""
+        placeholder="QR (Multiplier)"
+      />
+      <input
+        type="button"
+        name="multiply"
+        value="Calculate"
+        onclick="{multiply()}"
+      />
+      <input
+        type="button"
+        name="nextBtn"
+        value="Next Step"
+        id="nextBtn"
+        class="hide"
+        onclick="{next()}"
+      />
+      <input
+        type="button"
+        name="prevBtn"
+        value="Previous Step"
+        id="prevBtn"
+        class="hide"
+        onclick="{previous()}"
+      />
+    </div>
+    <div class="container">
+      <div id="content">
+        <div class="hide" id="resultContainer">
+          <table id="results">
+            <thead>
+              <tr>
+                <th>AC</th>
+                <th>QR</th>
+                <th>QR<sub>n+1</sub></th>
+                <th>BR / (BR'+1)</th>
+                <th>SC</th>
+                <th>STEPS PERFORMED</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+          <p id="finalResult"></p>
+        </div>
+      </div>
+      <div>
+        <div class="hide" id="givenData"></div>
+        <div class="hide" id="explaination">Explaination :</div>
+      </div>
+    </div>
+  </body>
+</html>
