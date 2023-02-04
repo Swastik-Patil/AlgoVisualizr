@@ -32,13 +32,16 @@ function writeDetails(ac, qr, br, sc) {
 
 function multiply() {
   // Get Numbers
-  var factor1 = parseInt($('input[name="factor1"]').val());
-  var factor2 = parseInt($('input[name="factor2"]').val());
+  let factor1 = $('input[name="factor1"]').val();
+  let factor2 = $('input[name="factor2"]').val();
 
-  if (factor1 == null || factor2 == null) {
+  if (factor1 == "" || factor2 == "") {
     alert("Please Enter the Numbers");
-    return;
+    return ; 
   }
+
+  factor1 = parseInt(factor1);
+  factor2 = parseInt(factor2);
 
   x = 1;
   isAddition = true;
@@ -62,6 +65,10 @@ function multiply() {
     var bitLength = Math.log(Math.abs(factor2)) / Math.log(2);
   }
   bitLength++;
+
+  if(bitLength < 4){
+    bitLength = 4;
+  }
 
   // Setup columns
   var a = pad(0, bitLength);
