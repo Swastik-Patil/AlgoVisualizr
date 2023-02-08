@@ -25,6 +25,11 @@ function nonrestoringDivision() {
   factor1 = parseInt(factor1);
   factor2 = parseInt(factor2);
 
+  if (factor1 < 0 || factor2 < 0) {
+    alert("Enter the Positive Numbers");
+    return;
+  }
+  
   x = 1;
   isAddition = true;
   explaination.innerHTML = "";
