@@ -3,75 +3,73 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/logo.ico">
     <title>Algo Visualizer</title>
     <script
       type="text/javascript"
       src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
     ></script>
-    <script src="script.js" defer></script>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <div id="inputContainer">
-      <input
-        type="text"
-        name="factor1"
-        value=""
-        placeholder="BR (Mulitiplicand)"
-      />
-      <span class="operation">X</span>
-      <input
-        type="text"
-        name="factor2"
-        value=""
-        placeholder="QR (Multiplier)"
-      />
-      <input
-        type="button"
-        name="multiply"
-        value="Calculate"
-        onclick="{multiply()}"
-      />
-      <input
-        type="button"
-        name="nextBtn"
-        value="Next Step"
-        id="nextBtn"
-        class="hide"
-        onclick="{next()}"
-      />
-      <input
-        type="button"
-        name="prevBtn"
-        value="Previous Step"
-        id="prevBtn"
-        class="hide"
-        onclick="{previous()}"
-      />
-    </div>
-    <div class="container">
-      <div id="content">
-        <div class="hide" id="resultContainer">
-          <table id="results">
-            <thead>
-              <tr>
-                <th>AC</th>
-                <th>QR</th>
-                <th>QR<sub>n+1</sub></th>
-                <th>BR / (BR'+1)</th>
-                <th>SC</th>
-                <th>STEPS PERFORMED</th>
-              </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-          </table>
-          <p id="finalResult"></p>
+    <header class="header">
+      <h1 class="logo"><a href="/index.html">Algo Visualizer</a></h1>
+    </header>
+    <main>
+      <div class="grid">
+        <div class="grid__item">
+          <div class="card">
+            <div class="card__content">
+              <div>
+                <h1 class="card__header">Booth's Multiplication</h1>
+                <p class="card__text">
+                  The booth algorithm is a multiplication algorithm that allows us
+                  to multiply the two signed binary integers in 2's complement,
+                  respectively.
+                </p>
+              </div>
+              <a href="algorithms/multiplication.html" style="margin-top:7.5rem;">
+              <button class="card__btn">Explore <span>&rarr;</span></button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid__item">
+          <div class="card">
+            <div class="card__content">
+              <div>
+                <h1 class="card__header">Restoring Division</h1>
+                <p class="card__text">
+                  Restoring division is usually performed on the fixed point
+                  fractional numbers. <br />When we perform division operations on
+                  two numbers, the division algorithm will give us two things,
+                  i.e., quotient and remainder.
+                </p>
+              </div>
+              <a href="algorithms/restoring.html">
+              <button class="card__btn">Explore <span>&rarr;</span></button>
+            </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid__item">
+          <div class="card">
+            <div class="card__content">
+              <h1 class="card__header">Non-Restoring Division</h1>
+              <p class="card__text">
+                Non-restoring Division Algorithm comes from the
+                <strong>restoring division</strong>.<br />
+                The restoring algorithm calculates the remainder by successively
+                subtracting the shifted denominator from the numerator until the
+                remainder is in the appropriate range.
+              </p>
+              <a href="algorithms/nonrestoring.html">
+                <button class="card__btn">Explore <span>&rarr;</span></button>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-      <div>
-        <div class="hide" id="givenData"></div>
-        <div class="hide" id="explaination">Explaination :</div>
-      </div>
-    </div>
+    </main> 
   </body>
 </html>

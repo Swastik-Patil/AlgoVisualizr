@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../logo.ico">
+
+    <title>restoringDivision</title>
+    <link rel="stylesheet" href="style.css">
+    <script
+    type="text/javascript"
+    src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+  ></script>
+    <script src="restoring.js" defer></script>
+    <style>
+      .animate::after {
+        content: "" !important;
+      }
+      .animate::before {
+        content: "\2197" !important;
+        top: 2.8rem;
+        left: 0;
+        transform: rotate(150deg);
+      }
+    </style>
+</head>
+<body>
+    <div id="inputContainer">
+        <input
+          type="text"
+          name="factor1"
+          value="4"
+          placeholder="Q ( Divdend )"
+        />
+        <span class="operation">÷</span>
+        <input
+          type="text"
+          name="factor2"
+          value="2"
+          placeholder="M ( Divisor )"
+        />
+        <input
+          type="button"
+          name="multiply"
+          value="Calculate"
+          onclick="{restoringDivision()}"
+        />
+        <input
+          type="button"
+          name="nextBtn"
+          value="Next Step"
+          id="nextBtn"
+          class="hide"
+          onclick="{next()}"
+        />
+        <input
+          type="button"
+          name="prevBtn"
+          value="Previous Step"
+          id="prevBtn"
+          class="hide"
+          onclick="{previous()}"
+        />
+      </div>
+      <div class="container">
+        <div id="content">
+          <div class="hide" id="resultContainer">
+            <table id="results">
+              <thead>
+                <tr>
+                  <th>A</th>
+                  <th>Q</th>
+                  <th>Q<sub>n</sub></th>
+                  <th>M / (M'+1)</th>
+                  <th>Count</th>
+                  <th>Steps performed</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div class="hide" id="givenData"></div>
+          <div class="hide" id="explaination">Explaination :</div>
+          <p id="finalResult" style="display:none;margin-left: 1rem;"></p>
+        </div>
+      </div>
+</body>
+</html>
