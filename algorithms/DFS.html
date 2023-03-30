@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Depth-First Search</title>
+
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="icon" type="image/x-icon" href="/logo.ico" />
+    <!-- Javascript for the actual visualization code -->
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/CustomEvents.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/UndoFunctions.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/AnimatedObject.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/AnimatedLabel.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/AnimatedCircle.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/AnimatedRectangle.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/AnimatedLinkedList.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/HighlightCircle.js"
+    ></script>
+    <script type="text/javascript" src="AnimationLibrary/Line.js"></script>
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/ObjectManager.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="AnimationLibrary/AnimationMain.js"
+    ></script>
+    <script type="text/javascript" src="AlgorithmLibrary/Algorithm.js"></script>
+    <script
+      type="text/javascript"
+      defer
+      src="AlgorithmLibrary/Graph.js"
+    ></script>
+    <script type="text/javascript" defer src="DFS.js"></script>
+  </head>
+
+  <body onload="init();" class="VisualizationMainPage">
+    <header class="header">
+      <h1 class="logo"><a href="/index.html">Algo Visualizer</a></h1>
+    </header>
+    <div id="container">
+      <div id="mainContent">
+        <div id="algoControlSection">
+          <table id="AlgorithmSpecificControls" class="inputContainer"></table>
+        </div>
+        <div
+          style="
+            display: flex;
+            width: max-content;
+            height: 28rem;
+            margin-inline: 0;
+          "
+        >
+          <canvas
+            class="explaination"
+            style="width: 55%; height: 100%"
+            id="canvas"
+            width="1000"
+            height="500"
+            style="font-size: medium"
+          ></canvas>
+          <div class="explaination explain" id="explaination"></div>
+        </div>
+        <div id="generalAnimationControlSection">
+          <table id="GeneralAnimationControls"></table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

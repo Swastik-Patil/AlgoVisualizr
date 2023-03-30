@@ -13,17 +13,32 @@ let rows = 1;
 let indexOfRow = 0;
 let isAddition = true;
 
-function nonrestoringDivision() {
-  let factor1 = $('input[name="factor1"]').val();
-  let factor2 = $('input[name="factor2"]').val();
+function writeDetails(ac, qr, br, sc) {
+  givenDataEle.innerHTML =
+    "<div><h3>Data :</h3></div><div><b>AC = </b>" +
+    ac +
+    "<br/><b>BR = </b>" +
+    br +
+    "&ensp;&ensp;<b>BR' = </b>" +
+    findOnesComplement(br) +
+    "&ensp;&ensp;<b>(BR' + 1) = </b>" +
+    findTwoscomplement(br) +
+    "<br/><b>QR = </b>" +
+    qr +
+    "<br/><b> SC = </b>" +
+    sc +
+    "</div>";
+}
 
-  if (factor1 == "" || factor2 == "") {
+function multiply() {
+  // Get Numbers
+  var factor1 = parseInt($('input[name="factor1"]').val());
+  var factor2 = parseInt($('input[name="factor2"]').val());
+
+  if (factor1 == null || factor2 == null) {
     alert("Please Enter the Numbers");
     return;
   }
-
-  factor1 = parseInt(factor1);
-  factor2 = parseInt(factor2);
 
   x = 1;
   isAddition = true;
@@ -47,104 +62,53 @@ function nonrestoringDivision() {
     var bitLength = Math.log(Math.abs(factor2)) / Math.log(2);
   }
   bitLength++;
-  if (bitLength < 4) {
-    bitLength = 4;
-  }
 
   // Setup columns
-  var A = "0".repeat(bitLength);
-  var Q = twosComplement(factor1, bitLength);
-  var Qn = Q.charAt(Q.length - 1);
-  var M = twosComplement(factor2, bitLength);
-  var count = Math.ceil(bitLength);
-  writeDetails(A, Q, M, count);
-  writeRow(
-    results,
-    A,
-    Q,
-    Qn,
-    M + " / " + findTwoscomplement(M),
-    count,
-    "Initials"
-  );
-  count = M.length;
-  document.getElementById("nextBtn").classList.remove("hide");
-  document.getElementById("prevBtn").classList.remove("hide");
-  while (count > 0) {
-    // Shifting
-    A = A.substring(1, A.length);
-    A = A + Q[0];
-    Q = Q.substring(1, Q.length);
-    Qn = "_";
+  var a = pad(0, bitLength);
+  var q = twosComplement(factor2, bitLength);
+  var q1 = "0";
+  var m = twosComplement(factor1, bitLength);
+  var sc = Math.ceil(bitLength);
+  writeDetails(a, q, m, sc);
+  writeRow(results, a, q, q1, m, sc, "Initials");
 
-    if (A[0] == "0") {
-      writeRow(
-        results,
-        A,
-        Q + "_",
-        Qn,
-        findTwoscomplement(M),
-        count,
-        "Left Shift"
-      );
-    } else {
-      writeRow(results, A, Q + "_", Qn, M, count, "Left Shift");
-    }
-    if (A[0] == "1") {
-      // Addition
-      var tempA = parseInt(A, 2);
-      var tempM = parseInt(M, 2);
-      tempA = tempA + tempM;
-      A = twosComplement(tempA, bitLength);
-      A = A.substring(A.length - bitLength);
-
-      if(A[0] == "1"){
-        Q = Q + "0";
-        Qn = "0";
-      }else{
-        Q = Q + "1";
-        Qn = "1";
-      }
-
-      writeRow(
-        results,
-        A,
-        Q,
-        Qn,
-        M,
-        count,
-        "A = A + M <br/>(A[0] == 0) => Qn = 1"
-      );
-    } else {
-      comp_M = findTwoscomplement(M);
-      var tempA = parseInt(A, 2);
-      var tempM = parseInt(M, 2);
+  for (var i = 0; i < bitLength; i++) {
+    if (q1 == "0" && q.substring(q.length - 1) == "1") {
+      var tempA = parseInt(a, 2);
+      var tempM = parseInt(m, 2);
 
       tempA = tempA - tempM;
-      A = twosComplement(tempA, bitLength);
+      a = twosComplement(tempA, bitLength);
+      writeRow(
+        results,
+        a,
+        q,
+        q1,
+        findTwoscomplement(m),
+        "",
+        "AC = AC + (BR' + 1)"
+      );
+    } else if (q1 == "1" && q.substring(q.length - 1) == "0") {
+      var tempA = parseInt(a, 2);
+      var tempM = parseInt(m, 2);
 
-      if(A[0] == "1"){
-        Q = Q + "0";
-        Qn = "0";
-      }else{
-        Q = Q + "1";
-        Qn = "1";
-      }
-
-      writeRow(results, A, Q, Qn, findTwoscomplement(M), count, "A = A - M");
-    }
-    count -= 1;
-
-    if (count == 0 && A[0] == 1) {
-      var tempA = parseInt(A, 2);
-      var tempM = parseInt(M, 2);
       tempA = tempA + tempM;
-      A = twosComplement(tempA, bitLength);
-      A = A.substring(A.length - bitLength);
-      writeRow(results, A, Q, Qn, M, count, "A[0] == 1 \n A = A + M");
+      a = twosComplement(tempA, bitLength);
+      a = a.substring(a.length - bitLength);
+
+      writeRow(results, a, q, q1, m, "", "AC = AC + BR");
     }
+
+    q1 = q.substring(q.length - 1);
+    q = a.charAt(a.length - 1) + q.substring(0, q.length - 1);
+    a = a.charAt(0) + a.substring(0, a.length - 1);
+
+    writeRow(results, a, q, q1, m, --sc, "Shift Right");
+    rows++;
   }
 
+  ans += a;
+  ans += q;
   ansEle.style.display = "none";
 
   //Enabling Explain button
@@ -155,7 +119,8 @@ function nonrestoringDivision() {
   rowEle[0].classList.add("active");
 
   if ((factor1 < 0 || factor2 < 0) && !(factor1 < 0 && factor2 < 0)) {
-    ansEle.innerHTML += "Remainder = (" + A + ")&ensp;";
+    ansEle.innerHTML += "Answer = (" + ans + ")&ensp;";
+    // ansEle.innerHTML += "<sub>2</sub>";
     ans = findTwoscomplement(ans);
     ansEle.innerHTML +=
       "<br/>Since the one number is negative so we have to take 2's complement of result.";
@@ -170,33 +135,11 @@ function nonrestoringDivision() {
     return;
   }
   ansEle.innerHTML +=
-    "Remainder = (" +
-    A +
+    "Answer = (" +
+    ans +
     ")<sub>2</sub>&ensp; = (" +
-    binaryToDecimal(A) +
-    ")<sub>10</sub><br/> " +
-    "Quotient = (" +
-    Q +
-    ")<sub>2</sub>&ensp; = (" +
-    binaryToDecimal(Q) +
-    ")<sub>10</sub> ";
-}
-
-function writeDetails(a, q, m, c) {
-  givenDataEle.innerHTML =
-    "<div><h3>Data :</h3></div><div><b>A = </b>" +
-    a +
-    "<br/><b>M = </b>" +
-    m +
-    "&ensp;&ensp;<b>M' = </b>" +
-    findOnesComplement(m) +
-    "&ensp;&ensp;<b>(M' + 1) = </b>" +
-    findTwoscomplement(m) +
-    "<br/><b>Q = </b>" +
-    q +
-    "<br/><b> Count = </b>" +
-    c +
-    "</div>";
+    binaryToDecimal(ans) +
+    ")<sub>10</sub>";
 }
 
 function twosComplement(number, bitLength) {
@@ -218,7 +161,7 @@ function twosComplement(number, bitLength) {
   }
 }
 
-function writeRow(table, a, q, q1, m, sc, log,isResult) {
+function writeRow(table, a, q, q1, m, sc, log) {
   // class='hide
   let str = "";
   if (indexOfRow == 0) {
@@ -244,7 +187,7 @@ function writeRow(table, a, q, q1, m, sc, log,isResult) {
       "<tr class='row' index=" +
       indexOfRow +
       "> <td> <div>" +
-      a + 
+      a +
       "</div></td><td><div>" +
       q +
       "</div></td><td><div>" +
@@ -350,58 +293,69 @@ function startExplaination() {
   let instruction = "";
   if (allData2 == null) {
     instruction =
-      "<div class='text' id='text'><br/>This is the first step of non-restoring division where we write the values of all the variables as it is in the table.<br/>The values are,<br/> <br/> A = " +
+      "<div class='text' id='text'><br/>This is the first step of booths algorithm where we write the values of all the variables as it is in the table.<br/>The values are,<br/> <br/> AC = " +
       ac1 +
-      "<br/>M = " +
+      "<br/>BR = " +
       br1 +
       "" +
-      "<br/>Q = " +
+      "<br/>QR = " +
       qr1 +
-      "<br/>count = " +
+      "<br/>QR<sub>n+1</sub> = " +
+      qrn1 +
+      "<br/>SC = " +
       sc1;
 
     explaination.innerHTML = instruction;
 
     explaination.innerHTML +=
-      "<br/><br/>After writing the values we perform shifting in the next step." ;
+      "<br/><br/>Here we have QR's LSB as " +
+      "<span class='red'>" +
+      qr1[qr1.length - 1] +
+      "</span>" +
+      " And QR<sub>n+1</sub> as " +
+      "<span class='red'>" +
+      qrn1 +
+      "</span>";
+
+    if (qr1[qr1.length - 1] == "1" && qrn1 == "0") {
+      //10
+      explaination.innerHTML +=
+        "<br/><br/> So we will Perform Addition of <span class='red'> AC </span> and <span class='red'> BR'+1 </span>in the next step. <br/> </div>";
+    } else {
+      //00 && 11
+      explaination.innerHTML +=
+        "<br/><br/> So in the next step we will Shifts the bits of <span class='red'> AC </span> and <span class='red'> QR </span> to the right.<br/><br/></div>";
+    }
     return;
   }
 
   //Steps to perform :
-  if (ac2[0] == "0" && qrn1 != "_") {
-    let str = `<br/>Now we have new A's MSB as <span class='red'>0</span><br/><br/>So now we will perform addition of <span class='red'>A</span> and <span class='red'>M'+1</span><br/><br/>`;
+  if (qr2[qr2.length - 1] == "0" && qrn2 == "1" && isAddition) {
+    let str = `<br/>Now we have new QR's LSB as <span class='red'>0</span> and QR<sub>n+1</sub> as <span class='red'>1</span><br/><br/>So now we will perform addition of <span class='red'>AC</span> and <span class='red'>BR</span><br/><br/>`;
     explaination.innerHTML += str;
-    let str1 = `<div class="test"> A &ensp;&ensp;&ensp;&ensp;=> ${ac2} <br/>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;+   <br/>M'+1&ensp;&ensp;=> ${br1}  
-                <br/>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;  ___________  <br/>A<sub>new</sub>&ensp;&ensp;=> <span class='red'>${ac1}</span><br/><br/>
-                Now The result of Addition of A and M'+1 gives us new A, We have to check the MSB of A which is <span class='red'>${ac1.charAt(
-                  0
-                )}</span>.<br/>Therefore the Last Bit of Q will Become <span class='red'>${qr1.charAt(
-      qr1.length - 1
-    )}</span> </div> `;
+    let str1 = `<div class="test"> AC &ensp;&ensp;&ensp;&ensp;=> ${ac2} <br/>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;    +   <br/>BR &ensp;&ensp;&ensp;&ensp;=> ${br2}  <br/>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;  ___________  <br/>AC<sub>new</sub>&ensp;&ensp;=> <span class='red'>${ac1}</span><br/><br/>Now we will shift the bits in the next step.</div> `;
     explaination.innerHTML += str1;
     isAddition = false;
-  } else if (ac2[0] == "1"  && qrn1 != "_") {
+  } else if (qr2[qr2.length - 1] == "1" && qrn2 == "0" && isAddition) {
     // explaination.classList.add("animate");
-    let str = `<br/>Now we have new A's MSB as <span class='red'>1</span><br/><br/>So now we will perform addition of <span class='red'>A</span> and <span class='red'>M</span><br/><br/>`;
+    let str = `<br/>Now we have new QR's LSB as <span class='red'>1</span> and QR<sub>n+1</sub> as <span class='red'>0</span><br/><br/>So now we will perform addition of <span class='red'>AC</span> and <span class='red'>BR'+1</span><br/><br/>`;
     explaination.innerHTML += str;
-    let str1 = `<div class="test"> A &ensp;&ensp;&ensp;&ensp;=> ${ac2} <br/>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;    +   <br/>M &ensp;&ensp;&ensp;&ensp;=> ${br1}  
-    <br/>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;  ___________  <br/>A<sub>new</sub>&ensp;&ensp;=> <span class='red'>${ac1}</span><br/><br/>
-    Now The result of Addition of A and M gives us new A, We have to check the MSB of A which is <span class='red'>${ac1.charAt(
-      0
-    )}</span>.<br/>Therefore the Last Bit of Q will Become <span class='red'>${qr1.charAt(
-      qr1.length - 1
-    )}</span> </div> `;
+    let str1 = `<div class="test"> 
+    AC &ensp;&ensp;&ensp;&ensp;=>     ${ac2} <br/>
+    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;    +   <br/>
+    BR'+1 &ensp;=>     ${findTwoscomplement(br2)}  <br/>
+    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;  ___________  <br/>AC<sub>new</sub>&ensp;&ensp;=>               <span class='red'>${ac1}</span> <br/>
+                <br/>Now we will shift the bits in the next step.
+</div> `;
     explaination.innerHTML += str1;
     isAddition = false;
   } else {
     explaination.innerHTML = "";
     explaination.innerHTML +=
       "<br/> The shifting has been perfomed as follow : <br/><br/>";
-    explainationContainer.innerHTML += `<div class="hide animate" id="animate"><p>AC &ensp; &ensp;&ensp;&ensp; QR &ensp;&ensp;</p><p>${ac2} &ensp; &ensp; ${qr2} &ensp; &ensp;</p><p>${ac1} &ensp; &ensp; ${qr1} &ensp; &ensp;</p></div>`;
+    explainationContainer.innerHTML += `<div class="hide animate" id="animate"><p>AC &ensp; &ensp;&ensp;&ensp; QR &ensp;&ensp; QR<sub>n+1</sub></p><p>${ac2} &ensp; &ensp; ${qr2} &ensp; &ensp; ${qrn2}</p><p>${ac1} &ensp; &ensp; ${qr1} &ensp; &ensp; ${qrn1}</p></div>`;
     document.getElementById("animate").classList.remove("hide");
-    explaination.innerHTML += `After Shifting We check the MSB(Most Significant Bit of A) <br/> i.e A[0] = ${ac1.charAt(
-      0
-    )}`;
+    explaination.innerHTML += `After Shifting the SC counter will be decreased by 1.<br/> i.e. SC = ${sc1}`;
     isAddition = true;
   }
 }

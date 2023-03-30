@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="../logo.ico">
+    <link rel="icon" type="image/x-icon" href="../logo.ico" />
 
     <title>restoringDivision</title>
     <link rel="stylesheet" href="style.css" />
@@ -26,6 +26,9 @@
     </style>
   </head>
   <body>
+    <header class="header">
+      <h1 class="logo"><a href="/index.html">Algo Visualizer</a></h1>
+    </header>
     <div id="inputContainer">
       <input type="text" name="factor1" value="4" placeholder="Q ( Divdend )" />
       <span class="operation">÷</span>
@@ -73,8 +76,8 @@
       </div>
       <div>
         <div class="hide" id="givenData"></div>
-        <div class="hide" id="explaination">Explaination :</div>
-        <p id="finalResult" style="display:none;margin-left: 1rem;"></p>
+        <div class="hide explaination" id="explaination">Explaination :</div>
+        <p id="finalResult" style="display: none; margin-left: 1rem"></p>
       </div>
     </div>
   </body>
